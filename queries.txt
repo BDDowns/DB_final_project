@@ -1,0 +1,8 @@
+1. Spearman (length of movie vs Score)
+          Queries:  mysql> SELECT runtimeMinutes
+                           FROM title.basics.tsv.gz
+                           INTO OUTFILE 'runtimes'
+                    mysql> SELECT averRating
+                           FROM title.ratings.tsv.gz
+                           INTO OUTFILE 'ratings'
+2. Pearsons (start year vs budget)
