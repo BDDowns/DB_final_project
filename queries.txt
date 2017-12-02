@@ -1,0 +1,16 @@
+Question 3 Query
+
+Select gross_revenue*
+From Titles
+Where Genre <is multiple>
+
+
+Select gross_revenue*
+From Titles
+Where Genre <is singular>
+
+
+Question 5 Query
+
+Select budget (gross_revenue - budget) AS profit
+From Titles
