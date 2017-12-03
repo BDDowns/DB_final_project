@@ -57,9 +57,10 @@ def experiment4():
     file = open("./data/decisionTree.csv", encoding="utf8")
     x_data = []
     y_data = []
-    # pull attributes from the header
-    attributes = file.readline()
-    attributes = attributes.strip().split(",")
+    # pull feature_names from the header
+    feature_names = file.readline()
+    feature_names = feature_names.strip().split(",")
+    feature_names = np.array(feature_names)
     for line in file:
         # remove quotes with replace(), return characters with strip(), and split() into a list on commas
         line = line.replace('"', '').strip().split(',')
@@ -68,6 +69,13 @@ def experiment4():
         # put the index length - 1 in the y values
         y_data.append(line[-1])
 
+    # make play nice with numpy
+    x_data = np.array(x_data)
+    y_data = np.array(y_data)
+
+    print(feature_names)
+    print(x_data)
+    print(y_data)
     # build a tree
 
     # write tree to file
@@ -81,9 +89,9 @@ def experiment5():
     file = open("./data/assocRules_withDirector.csv", encoding="utf8")
     data = []
 
-    # pull attributes from the header
-    attributes = file.readline()
-    attributes = attributes.strip().split(",")
+    # pull feature_names from the header
+    feature_names = file.readline()
+    feature_names = feature_names.strip().split(",")
     for line in file:
         # remove quotes with replace(), return characters with strip(), and split() into a list on commas
         line = line.replace('"', '').strip().split(',')
@@ -93,3 +101,5 @@ def experiment5():
 def visual5():
     pass
 
+
+experiment4()
