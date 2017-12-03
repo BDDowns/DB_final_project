@@ -67,10 +67,10 @@ def experiment4():
     for line in file:
         # remove quotes with replace(), return characters with strip(), and split() into a list on commas
         line = line.replace('"', '').strip().split(',')
-        # take everything from before index length - 1 and store it as x values 
-        x_data.append(line[:-1])
-        # put the index length - 1 in the y values
-        y_data.append(line[-1])
+        # filter missing values
+        if all(x for x in line):
+            x_data.append(line[:-1])
+            y_data.append(line[-1])
     
     file.close()
 
@@ -99,7 +99,8 @@ def experiment5():
     for line in file:
         # remove quotes with replace(), return characters with strip(), and split() into a list on commas
         line = line.replace('"', '').strip().split(',')
-        data.append(line)
+        if all(x for x in line):
+            data.append(line)
     file.close()
     data = np.array(data)
     
@@ -107,3 +108,4 @@ def experiment5():
 def visual5():
     pass
 
+experiment4()
