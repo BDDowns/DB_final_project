@@ -9,12 +9,16 @@ and a seperate function to output a visual representation of said exeriment.
 
 import numpy as np
 import scipy as sp
+import sklearn as sk
 import matplotlib as mpl
 import pandas as pd
 
+
+from sklearn import tree
+
+
 # from mlxtend.frequent_patterns import apriori
 # from mlxtend.frequent_patterns import association_rules
-
 
 '''
 Experiment 1 analyzes the spearman rank correlation of length of movie and rating
@@ -55,10 +59,30 @@ Experiment 4 uses a decision tree to predict imdb_score of a film given 7 featur
 
 '''
 def experiment4():
-    pass
+    # read in data file
+    file = open("./data/decisionTree.csv", encoding="utf8")
+    data = []
+    x = []
+    y = []
+    # pull attributes from the header
+    attributes = file.readline()
+    attributes = attributes.strip().split(",")
+    for line in file:
+        # remove quotation marks
+        line = line.replace('"', '')
+        # remove return characters
+        line = line.strip()
+        # split on comma
+        line = line.split(',')
+        # take everything from before index length - 1 and store it as x values 
+        x.append(line[:-1])
+        # put the index length - 1 in the y values
+        y.append(line[-1])
+    # build a tree
+    # dectree = tree.DecisionTreeClassifier()
+    # dectree = dectree.fit(x,y)
 
-def visual4():
-    pass
+    # write tree to file
 
 '''
 Experiment 5 looks at association of actors and directors by performing a market basket analysis
@@ -69,3 +93,6 @@ def experiment5():
 
 def visual5():
     pass
+
+
+experiment4()
