@@ -13,6 +13,8 @@ import sklearn as sk
 import matplotlib as mpl
 import pandas as pd
 
+from sklearn.preprocessing import LabelEncoder
+
 
 '''
 Experiment 1 analyzes the spearman rank correlation of length of movie and rating
@@ -73,10 +75,8 @@ def experiment4():
     x_data = np.array(x_data)
     y_data = np.array(y_data)
 
-    print(feature_names)
-    print(x_data)
-    print(y_data)
     # build a tree
+
 
     # write tree to file
 
@@ -92,14 +92,15 @@ def experiment5():
     # pull feature_names from the header
     feature_names = file.readline()
     feature_names = feature_names.strip().split(",")
+    feature_names = np.array(feature_names)
     for line in file:
         # remove quotes with replace(), return characters with strip(), and split() into a list on commas
         line = line.replace('"', '').strip().split(',')
         data.append(line)
-    print(data)
+    data = np.array(data)
+    
 
 def visual5():
     pass
 
 
-experiment4()
