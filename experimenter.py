@@ -10,7 +10,10 @@ and a seperate function to output a visual representation of said exeriment.
 import numpy as np
 import scipy as sp
 import matplotlib as mpl
+import pandas as pd
 
+# from mlxtend.frequent_patterns import apriori
+# from mlxtend.frequent_patterns import association_rules
 
 
 '''
@@ -37,8 +40,7 @@ def visual2():
     pass
 
 '''
-Experiment 3 performs a regression analysis of the rating and runtime of a television series in an attempt to forcast
-the performance of the next season
+Experiment 3 performs a regression analysis of the rating and runtime of a television series 
 
 '''
 def experiment3():
