@@ -13,8 +13,9 @@ import sklearn as sk
 import matplotlib as mpl
 import pandas as pd
 
-from sklearn.preprocessing import LabelEncoder as le
-from sklearn.preprocessing import OneHotEncoder as ohe
+from sklearn.tree import DecisionTreeRegressor, export_graphviz
+from sklearn.cross_validation import train_test_split
+
 
 
 '''
@@ -56,32 +57,21 @@ Experiment 4 uses a decision tree to predict imdb_score of a film given 7 featur
 
 '''
 def experiment4():
-    # read in data file
-    file = open("./data/decisionTree.csv", encoding="utf8")
-    x_data = []
-    y_data = []
-    # pull feature_names from the header
-    feature_names = file.readline()
-    feature_names = feature_names.strip().split(",")
-    feature_names = np.array(feature_names)
-    for line in file:
-        # remove quotes with replace(), return characters with strip(), and split() into a list on commas
-        line = line.replace('"', '').strip().split(',')
-        # filter missing values
-        if all(x for x in line):
-            x_data.append(line[:-1])
-            y_data.append(line[-1])
-    
-    file.close()
+    df = pd.read_csv("./data/decisionTree.csv")
+    X, y = df.iloc[:,:-1], df.iloc[:,-1]
+    X_encoded = pd.get_dummies(X)
 
-    # make play nice with numpy
-    x_data = np.array(x_data)
-    y_data = np.array(y_data)
+    X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2, random_state=1)
 
-    # build a tree
+    regTree = DecisionTreeRegressor(max_depth=3)
+    regTree.fit(X_train,y_train)
 
+    y_hat = regTree.predict(X_test)
 
-    # write tree to file
+    print('MSE: {0:.3f}'.format(sk.metrics.mean_squared_error(y_test,y_hat)), "\n")
+
+    export_graphviz(regTree, out_file="./results/regressionTreeD3.dot")
+
 
 '''
 Experiment 5 looks at association of actors and directors by performing a market basket analysis
