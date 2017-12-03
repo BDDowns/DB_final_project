@@ -14,12 +14,6 @@ import matplotlib as mpl
 import pandas as pd
 
 
-from sklearn import tree
-
-
-# from mlxtend.frequent_patterns import apriori
-# from mlxtend.frequent_patterns import association_rules
-
 '''
 Experiment 1 analyzes the spearman rank correlation of length of movie and rating
 
@@ -61,26 +55,20 @@ Experiment 4 uses a decision tree to predict imdb_score of a film given 7 featur
 def experiment4():
     # read in data file
     file = open("./data/decisionTree.csv", encoding="utf8")
-    data = []
-    x = []
-    y = []
+    x_data = []
+    y_data = []
     # pull attributes from the header
     attributes = file.readline()
     attributes = attributes.strip().split(",")
     for line in file:
-        # remove quotation marks
-        line = line.replace('"', '')
-        # remove return characters
-        line = line.strip()
-        # split on comma
-        line = line.split(',')
+        # remove quotes with replace(), return characters with strip(), and split into a list on commas
+        line = line.replace('"', '').strip().split(',')
         # take everything from before index length - 1 and store it as x values 
-        x.append(line[:-1])
+        x_data.append(line[:-1])
         # put the index length - 1 in the y values
-        y.append(line[-1])
+        y_data.append(line[-1])
+
     # build a tree
-    # dectree = tree.DecisionTreeClassifier()
-    # dectree = dectree.fit(x,y)
 
     # write tree to file
 
@@ -89,10 +77,19 @@ Experiment 5 looks at association of actors and directors by performing a market
 
 '''
 def experiment5():
-    pass
+    # read in data file
+    file = open("./data/assocRules_withDirector.csv", encoding="utf8")
+    data = []
+
+    # pull attributes from the header
+    attributes = file.readline()
+    attributes = attributes.strip().split(",")
+    for line in file:
+        # remove quotes with replace(), return characters with strip(), and split into a list on commas
+        line = line.replace('"', '').strip().split(',')
+        data.append(line)
+    print(data)
 
 def visual5():
     pass
 
-
-experiment4()
