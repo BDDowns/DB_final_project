@@ -6,7 +6,12 @@
                            FROM title.ratings.tsv.gz
                            INTO OUTFILE 'ratings'
 2. Pearsons (start year vs budget)
-
+          Queries: mysql> SELECT startYear
+                          FROM title.basics.tsv.gz
+                          INTO OUTFILE 'startyears'
+                   mysql> SELECT budget
+                          FROM title.basics.tsv.gz
+                          INTO OUTFILE 'budgets'
 
 3. 
 
