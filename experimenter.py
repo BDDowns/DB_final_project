@@ -61,7 +61,7 @@ def experiment4():
     attributes = file.readline()
     attributes = attributes.strip().split(",")
     for line in file:
-        # remove quotes with replace(), return characters with strip(), and split into a list on commas
+        # remove quotes with replace(), return characters with strip(), and split() into a list on commas
         line = line.replace('"', '').strip().split(',')
         # take everything from before index length - 1 and store it as x values 
         x_data.append(line[:-1])
@@ -85,7 +85,7 @@ def experiment5():
     attributes = file.readline()
     attributes = attributes.strip().split(",")
     for line in file:
-        # remove quotes with replace(), return characters with strip(), and split into a list on commas
+        # remove quotes with replace(), return characters with strip(), and split() into a list on commas
         line = line.replace('"', '').strip().split(',')
         data.append(line)
     print(data)
