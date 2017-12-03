@@ -11,7 +11,7 @@
 3. 
 
 4. Decision Tree Regression
-        Queries:  mysql> SELECT director, actor_1_name, actor_2_name, actor_3_name, duration, content_rating, budget, imdb_score
+        Queries:  mysql> SELECT director, actor_1_name, actor_2_name, actor_3_name, duration, content_rating, gross-budget AS "net_revenue", imdb_score
                          FROM movie_metadata.csv
                          INTO OUTFILE 'decisionTree'
 
