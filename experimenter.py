@@ -13,7 +13,7 @@ import sklearn as sk
 import matplotlib as mpl
 import pandas as pd
 
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder as le
 
 
 '''
@@ -70,6 +70,8 @@ def experiment4():
         x_data.append(line[:-1])
         # put the index length - 1 in the y values
         y_data.append(line[-1])
+    
+    file.close()
 
     # make play nice with numpy
     x_data = np.array(x_data)
@@ -97,10 +99,10 @@ def experiment5():
         # remove quotes with replace(), return characters with strip(), and split() into a list on commas
         line = line.replace('"', '').strip().split(',')
         data.append(line)
+    file.close()
     data = np.array(data)
     
 
 def visual5():
     pass
-
 
