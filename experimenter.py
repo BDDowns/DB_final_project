@@ -22,11 +22,30 @@ Experiment 1 analyzes the spearman rank correlation of length of movie and ratin
 
 '''
 def experiment1():
-    pass
-
-
-def visual1():
-    pass
+    # read in data file
+        file1 = open("./data/movie_length.csv", encoding="utf8")
+        file2 = open("./data/imdb_score.csv", encoding="utf8")
+        x = file1
+        y = file2
+        for line in file1:
+            # remove quotes with replace(), return characters with strip(), and split() into a list on commas
+        line = line.replace('"', '').strip().split(',')
+        x.append(line)
+        file1.close()
+        for line in file2:
+            # remove quotes with replace(), return characters with strip(), and split() into a list on commas
+        line = line.replace('"', '').strip().split(',')
+        x.append(line)
+        x = np.array(data)
+        y = np.array(data)
+    #show spearman rank correlation coefficient as first input, and then p-value as second output
+    print(spearmanr(x,y))
+    #print out scatter plot
+    mpl.scatter(x, y, s=area, c=colors, alpha=0.5)
+    mpl.title('Movie Length compared to Critic Score')
+    mpl.xlabel('Movie Length')
+    mpl.ylabel('Movie Score')
+    mpl.show()
 
 
 '''
@@ -34,12 +53,30 @@ Experiment 2 analyzes the correlation of start year and budget for a movie, usin
 
 '''
 def experiment2():
-    pass
-
-
-def visual2():
-    pass
-
+ # read in data file
+        file1 = open("./data/movie_length.csv", encoding="utf8")
+        file2 = open("./data/imdb_score.csv", encoding="utf8")
+        x = file1
+        y = file2
+        for line in file1:
+            # remove quotes with replace(), return characters with strip(), and split() into a list on commas
+        line = line.replace('"', '').strip().split(',')
+        x.append(line)
+        file1.close()
+        for line in file2:
+            # remove quotes with replace(), return characters with strip(), and split() into a list on commas
+        line = line.replace('"', '').strip().split(',')
+        x.append(line)
+        x = np.array(data)
+        y = np.array(data)
+    #show pearson correlation coefficient as first input, and then p-value as second output
+    print(pearsonr(x,y))
+    #print out scatter plot
+    mpl.scatter(x, y, s=area, c=colors, alpha=0.5)
+    mpl.title('Budget Over Time')
+    mpl.xlabel('Release Year')
+    mpl.ylabel('Budget')
+    mpl.show()
 '''
 Experiment 3 performs a regression analysis of the rating and runtime of a television series 
 
