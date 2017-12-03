@@ -14,6 +14,7 @@ import matplotlib as mpl
 import pandas as pd
 
 from sklearn.preprocessing import LabelEncoder as le
+from sklearn.preprocessing import OneHotEncoder as ohe
 
 
 '''

@@ -19,3 +19,8 @@
         Query:    mysql> SELECT director, actor_1_name, actor_2_name, actor_3_name
                          FROM movie_metadata.csv
                          INTO OUTFILE 'associationRules'
+
+6. Neural Network
+        Query:    mysql> SELECT director, actor1name, actor2name, actor3name, rating, gross-budget AS "netrevenue"
+                         FROM movie_metadata.csv
+                         INTO OUTFILE 'neuralNetwork'
