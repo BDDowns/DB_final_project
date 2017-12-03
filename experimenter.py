@@ -51,7 +51,7 @@ def visual3():
     pass
 
 '''
-Experiment 4 performs a cluster analysis of movies based on _______ to determine similar films
+Experiment 4 uses a decision tree to predict imdb_score of a film given 7 features of the data
 
 '''
 def experiment4():
