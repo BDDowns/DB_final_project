@@ -28,18 +28,22 @@ Experiment 1 analyzes the spearman rank correlation of length of movie and ratin
 
 '''
 def experiment1():
+    #read in files and adjust them with panda
     file1 = pd.read_csv("./data/movie_length.csv")
     file2 = pd.read_csv("./data/imdb_score.csv")
     x = file1
     y = file2
     colors = (0,0,0)
     area = np.pi*3
+    #show the spearman rank correlation
     print(spearmanr(x,y))
+    #display the scatterplot
     plt.scatter(x, y, s=area, c=colors, alpha=0.5)
     plt.title('Movie Length compared to Critic Score')
     plt.xlabel('Movie Length')
     plt.ylabel('Movie Score')
     plt.show()
+    #save the 
     fig = plt.figure()
     fig.savefig('Results1.png')
 
@@ -49,8 +53,8 @@ def experiment1():
 
 # '''
  def experiment2():
-    file1 = pd.read_csv("./data/movie_length.csv")
-    file2 = pd.read_csv("./data/imdb_score.csv")
+    file1 = pd.read_csv("./data/release_year.csv")
+    file2 = pd.read_csv("./data/budget.csv")
     x = file1
     y = file2
     colors = (0,0,0)
