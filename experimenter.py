@@ -13,8 +13,10 @@ import sklearn as sk
 import matplotlib as mpl
 import pandas as pd
 
-from sklearn.tree import DecisionTreeRegressor, export_graphviz
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor, export_graphviz
 from sklearn.cross_validation import train_test_split
+from sklearn.neural_network import MLPRegressor, MLPClassifier
+from scipy.stats import spearmanr, pearsonr
 
 
 
@@ -24,17 +26,17 @@ Experiment 1 analyzes the spearman rank correlation of length of movie and ratin
 '''
 def experiment1():
     # read in data file
-        file1 = open("./data/movie_length.csv", encoding="utf8")
-        file2 = open("./data/imdb_score.csv", encoding="utf8")
-        x = file1
-        y = file2
-        for line in file1:
-            # remove quotes with replace(), return characters with strip(), and split() into a list on commas
+    file1 = open("./data/movie_length.csv", encoding="utf8")
+    file2 = open("./data/imdb_score.csv", encoding="utf8")
+    x = file1
+    y = file2
+    for line in file1:
+        # remove quotes with replace(), return characters with strip(), and split() into a list on commas
         line = line.replace('"', '').strip().split(',')
         x.append(line)
         file1.close()
-        for line in file2:
-            # remove quotes with replace(), return characters with strip(), and split() into a list on commas
+    for line in file2:
+        # remove quotes with replace(), return characters with strip(), and split() into a list on commas
         line = line.replace('"', '').strip().split(',')
         x.append(line)
         x = np.array(data)
@@ -55,21 +57,21 @@ Experiment 2 analyzes the correlation of start year and budget for a movie, usin
 '''
 def experiment2():
  # read in data file
-        file1 = open("./data/movie_length.csv", encoding="utf8")
-        file2 = open("./data/imdb_score.csv", encoding="utf8")
-        x = file1
-        y = file2
-        for line in file1:
-            # remove quotes with replace(), return characters with strip(), and split() into a list on commas
-        line = line.replace('"', '').strip().split(',')
-        x.append(line)
-        file1.close()
-        for line in file2:
-            # remove quotes with replace(), return characters with strip(), and split() into a list on commas
-        line = line.replace('"', '').strip().split(',')
-        x.append(line)
-        x = np.array(data)
-        y = np.array(data)
+    file1 = open("./data/movie_length.csv", encoding="utf8")
+    file2 = open("./data/imdb_score.csv", encoding="utf8")
+    x = file1
+    y = file2
+    for line in file1:
+    # remove quotes with replace(), return characters with strip(), and split() into a list on commas
+    line = line.replace('"', '').strip().split(',')
+    x.append(line)
+    file1.close()
+    for line in file2:
+    # remove quotes with replace(), return characters with strip(), and split() into a list on commas
+    line = line.replace('"', '').strip().split(',')
+    x.append(line)
+    x = np.array(data)
+    y = np.array(data)
     #show pearson correlation coefficient as first input, and then p-value as second output
     print(pearsonr(x,y))
     #print out scatter plot
@@ -90,49 +92,82 @@ def visual3():
     pass
 
 '''
-Experiment 4 uses a decision tree to predict imdb_score of a film given 7 features of the data
+Experiment 4 uses a regression decision tree to predict imdb_score of a film given 7 features of the data
+It operates as a standalone function
 
 '''
 def experiment4():
+    # read in as datafile with pandas
     df = pd.read_csv("./data/decisionTree.csv")
-    X, y = df.iloc[:,:-1], df.iloc[:,-1]
+    # drop rows with missing values for error correction
+    df = df.dropna()
+    # split the data by selecting columns in csv for features and class/value
+    X, y = df.iloc[1:,:-1], df.iloc[1:,-1]
+    # pd.get_dummies(x) makes matrix representation for categorical data to eliminate ordinality imposed by assigning random numerical values
     X_encoded = pd.get_dummies(X)
 
+    # split a train and test set for cross_validated sampling
     X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2, random_state=1)
 
-    regTree = DecisionTreeRegressor(max_depth=3)
+    # create a regression tree object, with maximum tree depth set to 5. this is tunable
+    regTree = DecisionTreeRegressor(max_depth=5)
+    # train the tree
     regTree.fit(X_train,y_train)
-
+    # create list of predicted values based on test set
     y_hat = regTree.predict(X_test)
 
+    # report mean squared error as the square of (ytest - yhat)
     print('MSE: {0:.3f}'.format(sk.metrics.mean_squared_error(y_test,y_hat)), "\n")
 
+    # output visualization tool for completed tree
     export_graphviz(regTree, out_file="./results/regressionTreeD3.dot")
 
 
 '''
-Experiment 5 looks at association of actors and directors by performing a market basket analysis
+Experiment 5 looks at the performance difference in machine learning classification problems
+It pits a classification decision tree with a multilayer perceptron classification neural network
+using identical attribute sets 
 
 '''
 def experiment5():
-    # read in data file
-    file = open("./data/assocRules_withDirector.csv", encoding="utf8")
-    data = []
+    decisionTreeClassifier()
+    neuralNetworkClassifier()
 
-    # pull feature_names from the header
-    feature_names = file.readline()
-    feature_names = feature_names.strip().split(",")
-    feature_names = np.array(feature_names)
-    for line in file:
-        # remove quotes with replace(), return characters with strip(), and split() into a list on commas
-        line = line.replace('"', '').strip().split(',')
-        if all(x for x in line):
-            data.append(line)
-    file.close()
-    data = np.array(data)
+def decisionTreeClassifier():
+    # create a decision tree
+    df = pd.read_csv("./data/decisionTree.csv")
+    df = df.dropna()
+    X, y = df.iloc[1:,[0,1,2,3,4,7]], df.iloc[1:,[5]]
+    X_encoded = pd.get_dummies(X)
     
 
-def visual5():
-    pass
+    X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2, random_state=1)
 
-experiment4()
+
+    classTree = DecisionTreeClassifier(max_depth=5)
+    classTree.fit(X_train, y_train)
+
+    y_predictions = classTree.predict(X_test)
+
+    print('Accuracy: {0:.3f}'.format(sk.metrics.accuracy_score(y_test, y_predictions)), "\n")
+
+    export_graphviz(classTree, out_file="./results/classifierTreeD5.dot")
+
+def neuralNetworkClassifier():
+    # create a neural network
+    df = pd.read_csv("./data/decisionTree.csv")
+    df = df.dropna()
+    X, y = df.iloc[1:,[0,1,2,3,4,7]], df.iloc[1:,[5]]
+    X_encoded = pd.get_dummies(X)
+
+    X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2, random_state=1)
+
+    mlpR = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(50, 10), random_state=1)
+
+    mlpR.fit(X_train, y_train)
+
+    y_predictions = mlpR.predict(X_test)
+    
+    print('Accuracy: {0:.3f}'.format(sk.metrics.accuracy_score(y_test, y_predictions)), "\n")
+
+
