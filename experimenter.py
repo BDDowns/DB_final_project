@@ -108,7 +108,7 @@ def experiment4():
     df[['duration','net_revenue']] = df_norm.transform(df[['duration','net_revenue']])
 
     # split the data by selecting columns in csv for features and class/value
-    X, y = df.iloc[1:,:-1], df.iloc[1:,-1]
+    X, y = df.iloc[:,:-1], df.iloc[:,-1]
     # pd.get_dummies(x) makes matrix representation for categorical data to eliminate ordinality imposed by assigning random numerical values
     X_encoded = pd.get_dummies(X)
 
@@ -149,7 +149,7 @@ def decisionTreeClassifier():
     df[['duration','net_revenue','imdbScore']] = df_norm.transform(df[['duration','net_revenue','imdbScore']])
 
     # split data into input / output and then cast categorical data
-    X, y = df.iloc[1:,[0,1,2,3,4,6,7]], df.iloc[1:,[5]]
+    X, y = df.iloc[:,[0,1,2,3,4,6,7]], df.iloc[:,[5]]
     X_encoded = pd.get_dummies(X)
     
     # split into train / test sets
@@ -163,7 +163,7 @@ def decisionTreeClassifier():
 
     print('Accuracy: {0:.3f}'.format(sk.metrics.accuracy_score(y_test, y_predictions)), "\n")
 
-    export_graphviz(classTree, out_file="./results/classifierTreeD5.dot")
+    export_graphviz(classTree, out_file="./results/classifierTreeD3.dot")
 
 def neuralNetworkClassifier():
     # create a neural network
@@ -175,16 +175,15 @@ def neuralNetworkClassifier():
     df_norm = preprocessing.MinMaxScaler().fit(df[['duration','net_revenue','imdbScore']])
     df[['duration','net_revenue','imdbScore']] = df_norm.transform(df[['duration','net_revenue','imdbScore']])
 
-    X, y = df.iloc[1:,[0,1,2,3,4,6,7]], df.iloc[1:,[5]]
+    X, y = df.iloc[:,[0,1,2,3,4,6,7]], df.iloc[:,[5]]
     X_encoded = pd.get_dummies(X)
 
     X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2, random_state=1)
 
-    mlpR = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(50, 10), random_state=1)
+    mlpC = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(15), random_state=1)
 
-    mlpR.fit(X_train, y_train)
+    mlpC.fit(X_train, y_train)
 
-    y_predictions = mlpR.predict(X_test)
+    y_predictions = mlpC.predict(X_test)
     
     print('Accuracy: {0:.3f}'.format(sk.metrics.accuracy_score(y_test, y_predictions)), "\n")
-
