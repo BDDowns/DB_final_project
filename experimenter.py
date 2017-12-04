@@ -104,8 +104,8 @@ def experiment4():
     # drop rows with missing values for error correction
     df = df.dropna()
 
-    df_norm = preprocessing.MinMaxScaler().fit(df[['duration','net_revenue','imdbScore']])
-    df[['duration','net_revenue','imdbScore']] = df_norm.transform(df[['duration','net_revenue','imdbScore']])
+    df_norm = preprocessing.MinMaxScaler().fit(df[['duration','net_revenue']])
+    df[['duration','net_revenue']] = df_norm.transform(df[['duration','net_revenue']])
 
     # split the data by selecting columns in csv for features and class/value
     X, y = df.iloc[1:,:-1], df.iloc[1:,-1]
@@ -116,7 +116,7 @@ def experiment4():
     X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2, random_state=1)
 
     # create a regression tree object, with maximum tree depth set to 5. this is tunable
-    regTree = DecisionTreeRegressor(max_depth=5)
+    regTree = DecisionTreeRegressor(max_depth=3)
     # train the tree
     regTree.fit(X_train,y_train)
     # create list of predicted values based on test set
@@ -132,7 +132,7 @@ def experiment4():
 '''
 Experiment 5 looks at the performance difference in machine learning classification problems
 It pits a classification decision tree with a multilayer perceptron classification neural network
-using identical attribute sets 
+using identical attribute sets.
 
 '''
 def experiment5():
@@ -140,21 +140,23 @@ def experiment5():
     neuralNetworkClassifier()
 
 def decisionTreeClassifier():
-    # create a decision tree
+    # read in data and drop rows with missing values for ease of experimentation
     df = pd.read_csv("./data/decisionTree.csv")
     df = df.dropna()
 
+    # scale the numerical data to keep an even playing field with the MLP classifier
     df_norm = preprocessing.MinMaxScaler().fit(df[['duration','net_revenue','imdbScore']])
     df[['duration','net_revenue','imdbScore']] = df_norm.transform(df[['duration','net_revenue','imdbScore']])
 
+    # split data into input / output and then cast categorical data
     X, y = df.iloc[1:,[0,1,2,3,4,6,7]], df.iloc[1:,[5]]
     X_encoded = pd.get_dummies(X)
     
-
+    # split into train / test sets
     X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2, random_state=1)
 
 
-    classTree = DecisionTreeClassifier(max_depth=5)
+    classTree = DecisionTreeClassifier(max_depth=3)
     classTree.fit(X_train, y_train)
 
     y_predictions = classTree.predict(X_test)
@@ -167,9 +169,9 @@ def neuralNetworkClassifier():
     # create a neural network
     df = pd.read_csv("./data/decisionTree.csv")
     df = df.dropna()
-    # the large range of revenue values was causing gradient explosion and killing error
-    # using a data normalization between 0 and 1 to gain more accuracy and compete with the decision tree
-    # however, we will normalize all numerical attributes between 0 and 1
+    # the large range of revenue values alone was killing accuracy (accuracy < 0.01%).
+    # As a result we implemented data normalization between 0 and 1 to gain more accuracy and compete with
+    # the decision tree
     df_norm = preprocessing.MinMaxScaler().fit(df[['duration','net_revenue','imdbScore']])
     df[['duration','net_revenue','imdbScore']] = df_norm.transform(df[['duration','net_revenue','imdbScore']])
 
