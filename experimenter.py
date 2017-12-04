@@ -16,6 +16,7 @@ import pandas as pd
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor, export_graphviz
 from sklearn.cross_validation import train_test_split
 from sklearn.neural_network import MLPRegressor, MLPClassifier
+from sklearn.naive_bayes import GaussianNB
 from sklearn import preprocessing
 from scipy.stats import spearmanr, pearsonr
 
@@ -136,15 +137,12 @@ using identical attribute sets.
 
 '''
 def experiment5():
-    decisionTreeClassifier()
-    neuralNetworkClassifier()
-
-def decisionTreeClassifier():
-    # read in data and drop rows with missing values for ease of experimentation
+    # grab data file
     df = pd.read_csv("./data/decisionTree.csv")
     df = df.dropna()
-
-    # scale the numerical data to keep an even playing field with the MLP classifier
+    # the large range of revenue values alone was killing accuracy (accuracy < 0.01%).
+    # As a result we implemented data normalization between 0 and 1 to gain more accuracy and compete with
+    # the decision tree
     df_norm = preprocessing.MinMaxScaler().fit(df[['duration','net_revenue','imdbScore']])
     df[['duration','net_revenue','imdbScore']] = df_norm.transform(df[['duration','net_revenue','imdbScore']])
 
@@ -155,35 +153,45 @@ def decisionTreeClassifier():
     # split into train / test sets
     X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2, random_state=1)
 
+    # run data over 3 classifiers
+    dtc_accuracy = decisionTreeClassifier(X_train, X_test, y_train, y_test)
+    mlp_accuracy = neuralNetworkClassifier(X_train, X_test, y_train, y_test)
+    nbc_accuracy = naiveBayesClassifier(X_train, X_test, y_train, y_test)
 
+    # output results
+    print('Experiment 5 results: \n')
+    print('Decision Tree Classifier Accuracy: {0:.3f}%'.format(dtc_accuracy), "\n")
+    print('Multi-layer Perceptron Classifier Accuracy: {0:.3f}%'.format(mlp_accuracy), "\n")
+    print('Naive Bayes Gaussian Classifier Accuracy: {0:.3f}%'.format(nbc_accuracy), "\n")
+
+
+def decisionTreeClassifier(X_train, X_test, y_train, y_test):
+    # create the tree
     classTree = DecisionTreeClassifier(max_depth=3)
-    classTree.fit(X_train, y_train)
-
-    y_predictions = classTree.predict(X_test)
-
-    print('Accuracy: {0:.3f}'.format(sk.metrics.accuracy_score(y_test, y_predictions)), "\n")
-
+    # train and test
+    y_predictions = classTree.fit(X_train, y_train).predict(X_test)
+    # output pretty graphics
     export_graphviz(classTree, out_file="./results/classifierTreeD3.dot")
+    # return accuracy
+    return sk.metrics.accuracy_score(y_test, y_predictions)
 
-def neuralNetworkClassifier():
-    # create a neural network
-    df = pd.read_csv("./data/decisionTree.csv")
-    df = df.dropna()
-    # the large range of revenue values alone was killing accuracy (accuracy < 0.01%).
-    # As a result we implemented data normalization between 0 and 1 to gain more accuracy and compete with
-    # the decision tree
-    df_norm = preprocessing.MinMaxScaler().fit(df[['duration','net_revenue','imdbScore']])
-    df[['duration','net_revenue','imdbScore']] = df_norm.transform(df[['duration','net_revenue','imdbScore']])
 
-    X, y = df.iloc[:,[0,1,2,3,4,6,7]], df.iloc[:,[5]]
-    X_encoded = pd.get_dummies(X)
-
-    X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2, random_state=1)
-
+def neuralNetworkClassifier(X_train, X_test, y_train, y_test):
+    # create the neural network
     mlpC = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(15), random_state=1)
+    # train and test
+    y_predictions = mlpC.fit(X_train, y_train).predict(X_test)
+    # return results as accuracy
+    return sk.metrics.accuracy_score(y_test, y_predictions)
 
-    mlpC.fit(X_train, y_train)
 
-    y_predictions = mlpC.predict(X_test)
-    
-    print('Accuracy: {0:.3f}'.format(sk.metrics.accuracy_score(y_test, y_predictions)), "\n")
+def naiveBayesClassifier(X_train, X_test, y_train, y_test):
+    # create the bayes net
+    nbc = GaussianNB()
+    # train and test
+    y_predictions = nbc.fit(X_train, y_train).predict(X_test)
+    # return results as accuracy
+    return sk.metrics.accuracy_score(y_test, y_predictions)
+
+
+experiment5()
