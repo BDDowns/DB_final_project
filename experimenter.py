@@ -43,7 +43,7 @@ def experiment1():
     plt.xlabel('Movie Length')
     plt.ylabel('Movie Score')
     plt.show()
-    #save the 
+    #save the graph as a png file
     fig = plt.figure()
     fig.savefig('Results1.png')
 
@@ -53,6 +53,7 @@ def experiment1():
 
 # '''
  def experiment2():
+    #read in files and adjust them with panda
     file1 = pd.read_csv("./data/release_year.csv")
     file2 = pd.read_csv("./data/budget.csv")
     x = file1
