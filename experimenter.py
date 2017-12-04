@@ -16,7 +16,9 @@ import pandas as pd
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor, export_graphviz
 from sklearn.cross_validation import train_test_split
 from sklearn.neural_network import MLPRegressor, MLPClassifier
+from sklearn import preprocessing
 from scipy.stats import spearmanr, pearsonr
+
 
 
 
@@ -24,62 +26,62 @@ from scipy.stats import spearmanr, pearsonr
 Experiment 1 analyzes the spearman rank correlation of length of movie and rating
 
 '''
-def experiment1():
-    # read in data file
-    file1 = open("./data/movie_length.csv", encoding="utf8")
-    file2 = open("./data/imdb_score.csv", encoding="utf8")
-    x = file1
-    y = file2
-    for line in file1:
-        # remove quotes with replace(), return characters with strip(), and split() into a list on commas
-        line = line.replace('"', '').strip().split(',')
-        x.append(line)
-        file1.close()
-    for line in file2:
-        # remove quotes with replace(), return characters with strip(), and split() into a list on commas
-        line = line.replace('"', '').strip().split(',')
-        x.append(line)
-        x = np.array(data)
-        y = np.array(data)
-    #show spearman rank correlation coefficient as first input, and then p-value as second output
-    print(spearmanr(x,y))
-    #print out scatter plot
-    mpl.scatter(x, y, s=area, c=colors, alpha=0.5)
-    mpl.title('Movie Length compared to Critic Score')
-    mpl.xlabel('Movie Length')
-    mpl.ylabel('Movie Score')
-    mpl.show()
+# def experiment1():
+#     # read in data file
+#     file1 = open("./data/movie_length.csv", encoding="utf8")
+#     file2 = open("./data/imdb_score.csv", encoding="utf8")
+#     x = file1
+#     y = file2
+#     for line in file1:
+#         # remove quotes with replace(), return characters with strip(), and split() into a list on commas
+#         line = line.replace('"', '').strip().split(',')
+#         x.append(line)
+#         file1.close()
+#     for line in file2:
+#         # remove quotes with replace(), return characters with strip(), and split() into a list on commas
+#         line = line.replace('"', '').strip().split(',')
+#         x.append(line)
+#         x = np.array(data)
+#         y = np.array(data)
+#     #show spearman rank correlation coefficient as first input, and then p-value as second output
+#     print(spearmanr(x,y))
+#     #print out scatter plot
+#     mpl.scatter(x, y, s=area, c=colors, alpha=0.5)
+#     mpl.title('Movie Length compared to Critic Score')
+#     mpl.xlabel('Movie Length')
+#     mpl.ylabel('Movie Score')
+#     mpl.show()
 
 
-'''
-Experiment 2 analyzes the correlation of start year and budget for a movie, using the pearson correlation coefficient
+# '''
+# Experiment 2 analyzes the correlation of start year and budget for a movie, using the pearson correlation coefficient
 
-'''
-def experiment2():
- # read in data file
-    file1 = open("./data/movie_length.csv", encoding="utf8")
-    file2 = open("./data/imdb_score.csv", encoding="utf8")
-    x = file1
-    y = file2
-    for line in file1:
-    # remove quotes with replace(), return characters with strip(), and split() into a list on commas
-    line = line.replace('"', '').strip().split(',')
-    x.append(line)
-    file1.close()
-    for line in file2:
-    # remove quotes with replace(), return characters with strip(), and split() into a list on commas
-    line = line.replace('"', '').strip().split(',')
-    x.append(line)
-    x = np.array(data)
-    y = np.array(data)
-    #show pearson correlation coefficient as first input, and then p-value as second output
-    print(pearsonr(x,y))
-    #print out scatter plot
-    mpl.scatter(x, y, s=area, c=colors, alpha=0.5)
-    mpl.title('Budget Over Time')
-    mpl.xlabel('Release Year')
-    mpl.ylabel('Budget')
-    mpl.show()
+# '''
+# def experiment2():
+#  # read in data file
+#     file1 = open("./data/movie_length.csv", encoding="utf8")
+#     file2 = open("./data/imdb_score.csv", encoding="utf8")
+#     x = file1
+#     y = file2
+#     for line in file1:
+#     # remove quotes with replace(), return characters with strip(), and split() into a list on commas
+#     line = line.replace('"', '').strip().split(',')
+#     x.append(line)
+#     file1.close()
+#     for line in file2:
+#     # remove quotes with replace(), return characters with strip(), and split() into a list on commas
+#     line = line.replace('"', '').strip().split(',')
+#     x.append(line)
+#     x = np.array(data)
+#     y = np.array(data)
+#     #show pearson correlation coefficient as first input, and then p-value as second output
+#     print(pearsonr(x,y))
+#     #print out scatter plot
+#     mpl.scatter(x, y, s=area, c=colors, alpha=0.5)
+#     mpl.title('Budget Over Time')
+#     mpl.xlabel('Release Year')
+#     mpl.ylabel('Budget')
+#     mpl.show()
 '''
 Experiment 3 performs a regression analysis of the rating and runtime of a television series 
 
@@ -101,6 +103,10 @@ def experiment4():
     df = pd.read_csv("./data/decisionTree.csv")
     # drop rows with missing values for error correction
     df = df.dropna()
+
+    df_norm = preprocessing.MinMaxScaler().fit(df[['duration','net_revenue','imdbScore']])
+    df[['duration','net_revenue','imdbScore']] = df_norm.transform(df[['duration','net_revenue','imdbScore']])
+
     # split the data by selecting columns in csv for features and class/value
     X, y = df.iloc[1:,:-1], df.iloc[1:,-1]
     # pd.get_dummies(x) makes matrix representation for categorical data to eliminate ordinality imposed by assigning random numerical values
@@ -137,7 +143,11 @@ def decisionTreeClassifier():
     # create a decision tree
     df = pd.read_csv("./data/decisionTree.csv")
     df = df.dropna()
-    X, y = df.iloc[1:,[0,1,2,3,4,7]], df.iloc[1:,[5]]
+
+    df_norm = preprocessing.MinMaxScaler().fit(df[['duration','net_revenue','imdbScore']])
+    df[['duration','net_revenue','imdbScore']] = df_norm.transform(df[['duration','net_revenue','imdbScore']])
+
+    X, y = df.iloc[1:,[0,1,2,3,4,6,7]], df.iloc[1:,[5]]
     X_encoded = pd.get_dummies(X)
     
 
@@ -157,7 +167,13 @@ def neuralNetworkClassifier():
     # create a neural network
     df = pd.read_csv("./data/decisionTree.csv")
     df = df.dropna()
-    X, y = df.iloc[1:,[0,1,2,3,4,7]], df.iloc[1:,[5]]
+    # the large range of revenue values was causing gradient explosion and killing error
+    # using a data normalization between 0 and 1 to gain more accuracy and compete with the decision tree
+    # however, we will normalize all numerical attributes between 0 and 1
+    df_norm = preprocessing.MinMaxScaler().fit(df[['duration','net_revenue','imdbScore']])
+    df[['duration','net_revenue','imdbScore']] = df_norm.transform(df[['duration','net_revenue','imdbScore']])
+
+    X, y = df.iloc[1:,[0,1,2,3,4,6,7]], df.iloc[1:,[5]]
     X_encoded = pd.get_dummies(X)
 
     X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2, random_state=1)
@@ -169,5 +185,4 @@ def neuralNetworkClassifier():
     y_predictions = mlpR.predict(X_test)
     
     print('Accuracy: {0:.3f}'.format(sk.metrics.accuracy_score(y_test, y_predictions)), "\n")
-
 
