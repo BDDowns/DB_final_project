@@ -27,62 +27,42 @@ from scipy.stats import spearmanr, pearsonr
 Experiment 1 analyzes the spearman rank correlation of length of movie and rating
 
 '''
-# def experiment1():
-#     # read in data file
-#     file1 = open("./data/movie_length.csv", encoding="utf8")
-#     file2 = open("./data/imdb_score.csv", encoding="utf8")
-#     x = file1
-#     y = file2
-#     for line in file1:
-#         # remove quotes with replace(), return characters with strip(), and split() into a list on commas
-#         line = line.replace('"', '').strip().split(',')
-#         x.append(line)
-#         file1.close()
-#     for line in file2:
-#         # remove quotes with replace(), return characters with strip(), and split() into a list on commas
-#         line = line.replace('"', '').strip().split(',')
-#         x.append(line)
-#         x = np.array(data)
-#         y = np.array(data)
-#     #show spearman rank correlation coefficient as first input, and then p-value as second output
-#     print(spearmanr(x,y))
-#     #print out scatter plot
-#     mpl.scatter(x, y, s=area, c=colors, alpha=0.5)
-#     mpl.title('Movie Length compared to Critic Score')
-#     mpl.xlabel('Movie Length')
-#     mpl.ylabel('Movie Score')
-#     mpl.show()
+def experiment1():
+    file1 = pd.read_csv("./data/movie_length.csv")
+    file2 = pd.read_csv("./data/imdb_score.csv")
+    x = file1
+    y = file2
+    colors = (0,0,0)
+    area = np.pi*3
+    print(spearmanr(x,y))
+    plt.scatter(x, y, s=area, c=colors, alpha=0.5)
+    plt.title('Movie Length compared to Critic Score')
+    plt.xlabel('Movie Length')
+    plt.ylabel('Movie Score')
+    plt.show()
+    fig = plt.figure()
+    fig.savefig('Results1.png')
 
 
 # '''
 # Experiment 2 analyzes the correlation of start year and budget for a movie, using the pearson correlation coefficient
 
 # '''
-# def experiment2():
-#  # read in data file
-#     file1 = open("./data/movie_length.csv", encoding="utf8")
-#     file2 = open("./data/imdb_score.csv", encoding="utf8")
-#     x = file1
-#     y = file2
-#     for line in file1:
-#     # remove quotes with replace(), return characters with strip(), and split() into a list on commas
-#     line = line.replace('"', '').strip().split(',')
-#     x.append(line)
-#     file1.close()
-#     for line in file2:
-#     # remove quotes with replace(), return characters with strip(), and split() into a list on commas
-#     line = line.replace('"', '').strip().split(',')
-#     x.append(line)
-#     x = np.array(data)
-#     y = np.array(data)
-#     #show pearson correlation coefficient as first input, and then p-value as second output
-#     print(pearsonr(x,y))
-#     #print out scatter plot
-#     mpl.scatter(x, y, s=area, c=colors, alpha=0.5)
-#     mpl.title('Budget Over Time')
-#     mpl.xlabel('Release Year')
-#     mpl.ylabel('Budget')
-#     mpl.show()
+ def experiment2():
+    file1 = pd.read_csv("./data/movie_length.csv")
+    file2 = pd.read_csv("./data/imdb_score.csv")
+    x = file1
+    y = file2
+    colors = (0,0,0)
+    area = np.pi*3
+    print(spearmanr(x,y))
+    plt.scatter(x, y, s=area, c=colors, alpha=0.5)
+    plt.title('Movie Budget Over Time')
+    plt.xlabel('Release Year')
+    plt.ylabel('Movie Budget')
+    plt.show()
+    fig = plt.figure()
+    fig.savefig('Results2.png')
 '''
 Experiment 3 performs a regression analysis of the rating and runtime of a television series 
 
