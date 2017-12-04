@@ -95,9 +95,10 @@ def visual3():
     pass
 
 '''
-Experiment 4 uses a regression decision tree to predict imdb_score of a film given 7 features of the data
-It operates as a standalone function
+Experiment 4 uses a Decision Tree Regression Algorithm to predict imdb_score of a film given the following features of the data:
+Director, Actor 1 Name, Actor 2 Name, Actor 3 Name, Duration, Content Rating, Net Revenue
 
+@return prints mean squared error to console and outputs a graphic of the completed tree
 '''
 def experiment4():
     # read in as datafile with pandas
@@ -105,6 +106,7 @@ def experiment4():
     # drop rows with missing values for error correction
     df = df.dropna()
 
+    # normalize real values to values between 0 and 1
     df_norm = preprocessing.MinMaxScaler().fit(df[['duration','net_revenue']])
     df[['duration','net_revenue']] = df_norm.transform(df[['duration','net_revenue']])
 
@@ -136,6 +138,7 @@ It pits a classification decision tree, multilayer perceptron classification neu
 against eachother using identical attribute sets to predict the rating of a movie using the following features:
 Director, Actor 1 Name, Actor 2 Name, Actor 3 Name, Duraction, Net Revenue and IMBDScore.
 
+@return prints comparative error of all three algorithms to console
 '''
 def experiment5():
     # grab data file
@@ -166,6 +169,12 @@ def experiment5():
     print('Naive Bayes Gaussian Classifier Accuracy: {0:.3f}%'.format(nbc_accuracy), "\n")
 
 
+'''
+DecisionTreeClassifier Builds, Trains and Tests a DecisionTreeClassifier
+
+@param X_train, X_test, y_train, y_test input training, test, output training test examples, respectively.
+@return error as percent classified correctly
+'''
 def decisionTreeClassifier(X_train, X_test, y_train, y_test):
     # create the tree
     classTree = DecisionTreeClassifier(max_depth=3)
@@ -176,7 +185,12 @@ def decisionTreeClassifier(X_train, X_test, y_train, y_test):
     # return accuracy
     return sk.metrics.accuracy_score(y_test, y_predictions)
 
+'''
+NeuralNetworkClassifier Builds, Trains and Tests a Multilayer Perceptron NN
 
+@param X_train, X_test, y_train, y_test input training, test, output training test examples, respectively.
+@return error as percent classified correctly
+'''
 def neuralNetworkClassifier(X_train, X_test, y_train, y_test):
     # create the neural network
     mlpC = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(15), random_state=1)
@@ -185,7 +199,12 @@ def neuralNetworkClassifier(X_train, X_test, y_train, y_test):
     # return results as accuracy
     return sk.metrics.accuracy_score(y_test, y_predictions)
 
+'''
+NaiveBayesClassifier Builds, Trains and Tests a Gaussian Naive Bayes Classifier
 
+@param X_train, X_test, y_train, y_test input training, test, output training test examples, respectively.
+@return error as percent classified correctly
+'''
 def naiveBayesClassifier(X_train, X_test, y_train, y_test):
     # create the bayes net
     nbc = GaussianNB()
