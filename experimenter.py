@@ -21,6 +21,12 @@ from sklearn import preprocessing
 from scipy.stats import spearmanr, pearsonr
 
 
+# external apriori algorithm library
+from mlxtend.frequent_patterns import apriori
+from mlxtend.frequent_patterns import association_rules
+from mlxtend.preprocessing import OnehotTransactions
+
+
 
 
 '''
@@ -84,15 +90,19 @@ Experiment 1 analyzes the spearman rank correlation of length of movie and ratin
 #     mpl.ylabel('Budget')
 #     mpl.show()
 '''
-Experiment 3 performs a regression analysis of the rating and runtime of a television series 
-
+Experiment3 Creates association rules between director and three actors
 '''
 def experiment3():
-    pass
+    df = pd.read_csv('./data/assocRules_withDirector.csv')
+    df = df.dropna()
+    df_values = df.values
+    oht = OnehotTransactions()
+    df_processed = oht.fit(df_values).transform(df_values)
 
-
-def visual3():
-    pass
+    df = pd.DataFrame(df_processed, columns=oht.columns_)
+    frequent_combinations = apriori(df, min_support=0.001, use_colnames=True)
+    rules = association_rules(frequent_combinations, metric="lift", min_threshold=1)
+    print(rules)
 
 '''
 Experiment 4 uses a Decision Tree Regression Algorithm to predict imdb_score of a film given the following features of the data:
@@ -138,13 +148,13 @@ It pits a classification decision tree, multilayer perceptron classification neu
 against eachother using identical attribute sets to predict the rating of a movie using the following features:
 Director, Actor 1 Name, Actor 2 Name, Actor 3 Name, Duraction, Net Revenue and IMBDScore.
 
-@return prints comparative error of all three algorithms to console
+@return prints comparative error of all three algorithms to console as % classified correctly
 '''
 def experiment5():
     # grab data file
     df = pd.read_csv("./data/decisionTree.csv")
     df = df.dropna()
-    # the large range of revenue values alone was killing accuracy (accuracy < 0.01%).
+    # the large range of revenue values alone was killing neural network accuracy (accuracy < 0.01%).
     # As a result we implemented data normalization between 0 and 1 to gain more accuracy and compete with
     # the decision tree
     df_norm = preprocessing.MinMaxScaler().fit(df[['duration','net_revenue','imdbScore']])
@@ -212,3 +222,8 @@ def naiveBayesClassifier(X_train, X_test, y_train, y_test):
     y_predictions = nbc.fit(X_train, y_train).predict(X_test)
     # return results as accuracy
     return sk.metrics.accuracy_score(y_test, y_predictions)
+
+
+
+
+experiment6()
