@@ -132,8 +132,9 @@ def experiment4():
 
 '''
 Experiment 5 looks at the performance difference in machine learning classification problems
-It pits a classification decision tree with a multilayer perceptron classification neural network
-using identical attribute sets.
+It pits a classification decision tree, multilayer perceptron classification neural network, and naive bayes gaussian classifier
+against eachother using identical attribute sets to predict the rating of a movie using the following features:
+Director, Actor 1 Name, Actor 2 Name, Actor 3 Name, Duraction, Net Revenue and IMBDScore.
 
 '''
 def experiment5():
@@ -192,6 +193,3 @@ def naiveBayesClassifier(X_train, X_test, y_train, y_test):
     y_predictions = nbc.fit(X_train, y_train).predict(X_test)
     # return results as accuracy
     return sk.metrics.accuracy_score(y_test, y_predictions)
-
-
-experiment5()
