@@ -10,7 +10,7 @@ and a seperate function to output a visual representation of said exeriment.
 import numpy as np
 import scipy as sp
 import sklearn as sk
-import matplotlib as mpl
+import matplotlib.pyplot as plt
 import pandas as pd
 
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor, export_graphviz
@@ -35,45 +35,47 @@ Experiment 1 analyzes the spearman rank correlation of length of movie and ratin
 '''
 def experiment1():
     #read in files and adjust them with panda
-    file1 = pd.read_csv("./data/movie_length.csv")
-    file2 = pd.read_csv("./data/imdb_score.csv")
-    x = file1
-    y = file2
+    # file1 = pd.read_csv("./data/movie_length.csv")
+    # file2 = pd.read_csv("./data/imdb_score.csv")
+    df = pd.read_csv('./data/spearman.csv')
+    X, y = df.iloc[:,:-1], df.iloc[:,-1]
     colors = (0,0,0)
     area = np.pi*3
     #show the spearman rank correlation
-    print(spearmanr(x,y))
+    print(spearmanr(X,y))
     #display the scatterplot
-    plt.scatter(x, y, s=area, c=colors, alpha=0.5)
+    plt.scatter(X, y, s=area, c=colors, alpha=0.5)
     plt.title('Movie Length compared to Critic Score')
     plt.xlabel('Movie Length')
     plt.ylabel('Movie Score')
     plt.show()
     #save the graph as a png file
     fig = plt.figure()
-    fig.savefig('Results1.png')
+    fig.savefig('./results/spearmancor.png')
 
 
-# '''
-# Experiment 2 analyzes the correlation of start year and budget for a movie, using the pearson correlation coefficient
+'''
+Experiment 2 analyzes the correlation of start year and budget for a movie, using the pearson correlation coefficient
 
-# '''
- def experiment2():
+'''
+def experiment2():
     #read in files and adjust them with panda
-    file1 = pd.read_csv("./data/release_year.csv")
-    file2 = pd.read_csv("./data/budget.csv")
-    x = file1
-    y = file2
+    df = pd.read_csv('./data/pearson.csv')
+    df = df.dropna()
+    X, y = df.iloc[:,:-1], df.iloc[:,-1]
     colors = (0,0,0)
     area = np.pi*3
-    print(spearmanr(x,y))
-    plt.scatter(x, y, s=area, c=colors, alpha=0.5)
+    print(X, y)
+    # print(pearsonr(X.values,y.values))
+    plt.scatter(X, y, s=area, c=colors, alpha=0.5)
     plt.title('Movie Budget Over Time')
     plt.xlabel('Release Year')
     plt.ylabel('Movie Budget')
     plt.show()
     fig = plt.figure()
-    fig.savefig('Results2.png')
+    fig.savefig('./results/pearsoncor.png')
+
+
 '''
 Experiment3 Creates association rules between director and three actors
 '''
@@ -208,7 +210,8 @@ def naiveBayesClassifier(X_train, X_test, y_train, y_test):
     # return results as accuracy
     return sk.metrics.accuracy_score(y_test, y_predictions)
 
-
-
-
-experiment6()
+# experiment1()
+# experiment2()
+# experiment3()
+# experiment4()
+# experiment5()
