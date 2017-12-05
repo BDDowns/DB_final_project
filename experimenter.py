@@ -31,7 +31,8 @@ from mlxtend.preprocessing import OnehotTransactions
 
 '''
 Experiment 1 analyzes the spearman rank correlation of length of movie and rating
-
+The experiment calculates the spearman rank and outputs the correlation coefficient
+and a scatter plot of the data
 '''
 def experiment1():
     #read in files and adjust them with panda
@@ -52,8 +53,8 @@ def experiment1():
     plt.show()
 
 '''
-Experiment 2 analyzes the correlation of start year and budget for a movie, using the pearson correlation coefficient
-
+Experiment 2 analyzes the pearson correlation of start year and budget for a movie
+The experiment outputs the correlation coefficient and p-value to console and creates a plot of the data
 '''
 def experiment2():
     #read in files and adjust them with panda
@@ -77,16 +78,25 @@ def experiment2():
 
 '''
 Experiment3 Creates association rules between director and three actors
+The function treats all as names in a market basket and calculates support, 
+confidence, and lift. The output is a datafile containing the association rules
+learned from the data.
 '''
 def experiment3():
+    # read in data as datafile in pandas
     df = pd.read_csv('./data/assocRules_withDirector.csv')
     df = df.dropna()
+    # get just the values, without the header
     df_values = df.values
+    # transform the data with a onehot transform, to vectorize categorical data
     oht = OnehotTransactions()
     df_processed = oht.fit(df_values).transform(df_values)
-
+    # rebuild the dataframe with transformed data
     df = pd.DataFrame(df_processed, columns=oht.columns_)
+
+    # find frequencies with apriori algorithm
     frequent_combinations = apriori(df, min_support=0.001, use_colnames=True)
+    # create tabular ruleset
     rules = association_rules(frequent_combinations, metric="lift", min_threshold=1)
     print(rules)
 
