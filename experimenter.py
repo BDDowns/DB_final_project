@@ -44,6 +44,13 @@ def experiment1():
     area = np.pi*3
     #show the spearman rank correlation
     correlation = spearmanr(X,y)
+
+    print()
+    print('Experiment 1 Spearman Rank:')
+    print('-------------------------------------------------------')
+    print('Correlation Coefficent: {0:.3f}'.format(correlation[0]))
+    print('P-Value: {0:.3f}'.format(correlation[1]), '\n')
+
     #display the scatterplot
     plt.scatter(X, y, s=area, c=colors, alpha=0.5)
     plt.title('Movie Length compared to Critic Score')
@@ -57,15 +64,25 @@ Experiment 2 analyzes the pearson correlation of start year and budget for a mov
 The experiment outputs the correlation coefficient and p-value to console and creates a plot of the data
 '''
 def experiment2():
-    #read in files and adjust them with panda
+    # read in files and adjust them with panda
     df = pd.read_csv('./data/pearson.csv')
     df = df.dropna()
+    # split data into input and output
     X, y = df.iloc[:,:-1], df.iloc[:,-1]
     colors = (0,0,0)
     area = np.pi*3
+    # flatten b/c pearsonr is powerful, but a pita
     X = X.values.flatten()
     y = y.values.flatten()
+    # correlation contains tuple of correlation coefficient and p-value
     correlation = pearsonr(X,y)
+
+    # print experimental output
+    print('Experiment 2 Pearson:')
+    print('-------------------------------------------------------')
+    print('Correlation Coefficent: {0:.3f}'.format(correlation[0]))
+    print('P-Value: {0:.3f}'.format(correlation[1]), '\n')
+
     # print(pearsonr(X.values,y.values))
     plt.scatter(X, y, s=area, c=colors, alpha=0.5)
     plt.title('Movie Budget Over Time')
@@ -93,11 +110,13 @@ def experiment3():
     df_processed = oht.fit(df_values).transform(df_values)
     # rebuild the dataframe with transformed data
     df = pd.DataFrame(df_processed, columns=oht.columns_)
-
+    print('Experiment 3 Association Rules of Actors and Directors')
+    print('-------------------------------------------------------')
     # find frequencies with apriori algorithm
     frequent_combinations = apriori(df, min_support=0.001, use_colnames=True)
     # create tabular ruleset
     rules = association_rules(frequent_combinations, metric="lift", min_threshold=1)
+    rules.to_csv('./results/association_rules.csv', sep='\t')
     print(rules)
 
 '''
@@ -132,6 +151,8 @@ def experiment4():
     y_hat = regTree.predict(X_test)
 
     # report mean squared error as the square of (ytest - yhat)
+    print('Experiment 4 Decision Tree Regressor')
+    print('-------------------------------------------------------')
     print('MSE: {0:.3f}'.format(sk.metrics.mean_squared_error(y_test,y_hat)), "\n")
 
     # output visualization tool for completed tree
@@ -169,7 +190,9 @@ def experiment5():
     nbc_accuracy = naiveBayesClassifier(X_train, X_test, y_train, y_test)
 
     # output results
-    print('Experiment 5 results: \n')
+    print()
+    print('Experiment 5 Classifier Comparison:')
+    print('-------------------------------------------------------')
     print('Decision Tree Classifier Accuracy: {0:.3f}%'.format(dtc_accuracy), "\n")
     print('Multi-layer Perceptron Classifier Accuracy: {0:.3f}%'.format(mlp_accuracy), "\n")
     print('Naive Bayes Gaussian Classifier Accuracy: {0:.3f}%'.format(nbc_accuracy), "\n")
@@ -219,8 +242,8 @@ def naiveBayesClassifier(X_train, X_test, y_train, y_test):
     # return results as accuracy
     return sk.metrics.accuracy_score(y_test, y_predictions)
 
-# experiment1()
-# experiment2()
-# experiment3()
-# experiment4()
-# experiment5()
+experiment1()
+experiment2()
+experiment3()
+experiment4()
+experiment5()
