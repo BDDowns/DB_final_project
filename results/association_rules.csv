@@ -1,0 +1,45 @@
+	antecedants	consequents	support	confidence	lift
+0	frozenset({'Will Ferrell'})	frozenset({'Adam McKay'})	0.006505387273836145	0.15625	128.09895833333331
+1	frozenset({'Adam McKay'})	frozenset({'Will Ferrell'})	0.0012197601138442774	0.8333333333333333	128.09895833333331
+2	frozenset({'Dennis Dugan'})	frozenset({'Adam Sandler'})	0.001829640170766416	0.7777777777777778	159.41203703703704
+3	frozenset({'Adam Sandler'})	frozenset({'Dennis Dugan'})	0.00487904045537711	0.29166666666666663	159.412037037037
+4	frozenset({'Adam Sandler'})	frozenset({'Steve Buscemi'})	0.00487904045537711	0.25	32.36184210526316
+5	frozenset({'Steve Buscemi'})	frozenset({'Adam Sandler'})	0.007725147387680423	0.15789473684210525	32.36184210526315
+6	frozenset({'Alexa PenaVega'})	frozenset({'Robert Rodriguez'})	0.002439520227688555	0.41666666666666663	157.6602564102564
+7	frozenset({'Robert Rodriguez'})	frozenset({'Alexa PenaVega'})	0.002642813579995934	0.38461538461538464	157.6602564102564
+8	frozenset({'Bill Murray'})	frozenset({'Wes Anderson'})	0.006911973978450905	0.17647058823529413	124.00840336134455
+9	frozenset({'Wes Anderson'})	frozenset({'Bill Murray'})	0.0014230534661516568	0.8571428571428572	124.00840336134455
+10	frozenset({'Mark Margolis'})	frozenset({'Darren Aronofsky'})	0.002439520227688555	0.41666666666666663	341.5972222222222
+11	frozenset({'Darren Aronofsky'})	frozenset({'Mark Margolis'})	0.0012197601138442774	0.8333333333333333	341.5972222222222
+12	frozenset({'Hector Elizondo'})	frozenset({'Garry Marshall'})	0.0016263468184590363	0.625	384.296875
+13	frozenset({'Garry Marshall'})	frozenset({'Hector Elizondo'})	0.0016263468184590363	0.625	384.296875
+14	frozenset({'Gore Verbinski'})	frozenset({'Johnny Depp'})	0.0014230534661516568	0.7142857142857143	85.69686411149826
+15	frozenset({'Johnny Depp'})	frozenset({'Gore Verbinski'})	0.008335027444602561	0.12195121951219512	85.69686411149826
+16	frozenset({'Jason Reitman'})	frozenset({'J.K. Simmons'})	0.0012197601138442774	0.8333333333333333	132.2311827956989
+17	frozenset({'J.K. Simmons'})	frozenset({'Jason Reitman'})	0.006302093921528766	0.16129032258064516	132.2311827956989
+18	frozenset({'J.K. Simmons'})	frozenset({'Sam Raimi'})	0.006302093921528766	0.16129032258064516	61.02977667493796
+19	frozenset({'Sam Raimi'})	frozenset({'J.K. Simmons'})	0.002642813579995934	0.38461538461538464	61.02977667493796
+20	frozenset({'James Franco'})	frozenset({'Sam Raimi'})	0.005692213864606627	0.2142857142857143	81.08241758241759
+21	frozenset({'Sam Raimi'})	frozenset({'James Franco'})	0.002642813579995934	0.4615384615384616	81.08241758241759
+22	frozenset({'John Carpenter'})	frozenset({'Jamie Lee Curtis'})	0.002642813579995934	0.38461538461538464	126.12820512820512
+23	frozenset({'Jamie Lee Curtis'})	frozenset({'John Carpenter'})	0.0030494002846106934	0.3333333333333333	126.12820512820512
+24	frozenset({'Jason Flemyng'})	frozenset({'Jason Statham'})	0.0038625736938402116	0.2631578947368421	49.78744939271255
+25	frozenset({'Jason Statham'})	frozenset({'Jason Flemyng'})	0.005285627159991868	0.19230769230769232	49.78744939271255
+26	frozenset({'Tim Burton'})	frozenset({'Johnny Depp'})	0.0032526936369180726	0.4375	52.489329268292686
+27	frozenset({'Johnny Depp'})	frozenset({'Tim Burton'})	0.008335027444602561	0.17073170731707318	52.48932926829269
+28	frozenset({'Kristen Stewart'})	frozenset({'Taylor Lautner'})	0.004065867046147591	0.25	136.63888888888889
+29	frozenset({'Taylor Lautner'})	frozenset({'Kristen Stewart'})	0.001829640170766416	0.5555555555555556	136.63888888888889
+30	frozenset({'Nichelle Nichols'})	frozenset({'Leonard Nimoy'})	0.0014230534661516568	0.8571428571428572	421.6285714285715
+31	frozenset({'Leonard Nimoy'})	frozenset({'Nichelle Nichols'})	0.0020329335230737954	0.6000000000000001	421.6285714285715
+32	frozenset({'Martin Scorsese'})	frozenset({'Leonardo DiCaprio'})	0.0042691603984549705	0.23809523809523808	53.23593073593073
+33	frozenset({'Leonardo DiCaprio'})	frozenset({'Martin Scorsese'})	0.00447245375076235	0.22727272727272727	53.23593073593074
+34	frozenset({'Madeline Kahn'})	frozenset({'Mel Brooks'})	0.0014230534661516568	0.7142857142857143	501.9387755102041
+35	frozenset({'Mel Brooks'})	frozenset({'Madeline Kahn'})	0.0014230534661516568	0.7142857142857143	501.9387755102041
+36	frozenset({'Martin Scorsese'})	frozenset({'Robert De Niro'})	0.0042691603984549705	0.38095238095238093	34.70194003527337
+37	frozenset({'Robert De Niro'})	frozenset({'Martin Scorsese'})	0.010977841024598495	0.14814814814814814	34.70194003527337
+38	frozenset({'Vin Diesel'})	frozenset({'Paul Walker'})	0.0038625736938402116	0.2631578947368421	68.13019390581717
+39	frozenset({'Paul Walker'})	frozenset({'Vin Diesel'})	0.0038625736938402116	0.2631578947368421	68.13019390581717
+40	frozenset({'Scarlett Johansson'})	frozenset({'Robert Downey Jr.'})	0.006098800569221387	0.16666666666666666	28.270114942528732
+41	frozenset({'Robert Downey Jr.'})	frozenset({'Scarlett Johansson'})	0.005895507216914007	0.17241379310344826	28.270114942528732
+42	frozenset({'Robert Rodriguez'})	frozenset({'Salma Hayek'})	0.002642813579995934	0.38461538461538464	99.5748987854251
+43	frozenset({'Salma Hayek'})	frozenset({'Robert Rodriguez'})	0.0038625736938402116	0.2631578947368421	99.5748987854251

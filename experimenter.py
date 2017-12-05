@@ -100,6 +100,9 @@ confidence, and lift. The output is a datafile containing the association rules
 learned from the data.
 '''
 def experiment3():
+    print('Experiment 3 Association Rules of Actors and Directors')
+    print('-------------------------------------------------------')
+    
     # read in data as datafile in pandas
     df = pd.read_csv('./data/assocRules_withDirector.csv')
     df = df.dropna()
@@ -109,9 +112,10 @@ def experiment3():
     oht = OnehotTransactions()
     df_processed = oht.fit(df_values).transform(df_values)
     # rebuild the dataframe with transformed data
+
+
     df = pd.DataFrame(df_processed, columns=oht.columns_)
-    print('Experiment 3 Association Rules of Actors and Directors')
-    print('-------------------------------------------------------')
+
     # find frequencies with apriori algorithm
     frequent_combinations = apriori(df, min_support=0.001, use_colnames=True)
     # create tabular ruleset
