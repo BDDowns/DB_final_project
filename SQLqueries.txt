@@ -1,0 +1,9 @@
+select duration, imdbScore from mydb.title where duration != 0;
+
+select year, budget from mydb.title where year != 0 and budget != 0;
+
+select director, actor1Name, actor2Name, actor3Name from mydb.title;
+
+select actor1Name, actor2Name, actor3Name from mydb.title;
+
+select director, actor1Name, actor2Name, actor3Name, duration, contentRating, gross - budget as 'net_revenue', imdbScore from mydb.title;
