@@ -42,17 +42,14 @@ def experiment1():
     colors = (0,0,0)
     area = np.pi*3
     #show the spearman rank correlation
-    print(spearmanr(X,y))
+    correlation = spearmanr(X,y)
     #display the scatterplot
     plt.scatter(X, y, s=area, c=colors, alpha=0.5)
     plt.title('Movie Length compared to Critic Score')
     plt.xlabel('Movie Length')
     plt.ylabel('Movie Score')
+    plt.savefig('./results/spearmancor.png')
     plt.show()
-    #save the graph as a png file
-    fig = plt.figure()
-    fig.savefig('./results/spearmancor.png')
-
 
 '''
 Experiment 2 analyzes the correlation of start year and budget for a movie, using the pearson correlation coefficient
@@ -65,15 +62,17 @@ def experiment2():
     X, y = df.iloc[:,:-1], df.iloc[:,-1]
     colors = (0,0,0)
     area = np.pi*3
-    print(X, y)
+    X = X.values.flatten()
+    y = y.values.flatten()
+    correlation = pearsonr(X,y)
     # print(pearsonr(X.values,y.values))
     plt.scatter(X, y, s=area, c=colors, alpha=0.5)
     plt.title('Movie Budget Over Time')
     plt.xlabel('Release Year')
     plt.ylabel('Movie Budget')
+    plt.savefig('./results/pearsoncor.png')
     plt.show()
-    fig = plt.figure()
-    fig.savefig('./results/pearsoncor.png')
+
 
 
 '''
